@@ -20,7 +20,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String JSON_STRING="{\"city\": {\"City_Name\": \"Mysore\", \"Latitude\": \"12.295\", \"Longitude\": \"76.639\", \"Temperature\": \"22\", \"Humidity\": \"90%\"}}";
+
     TextView tv1;
     TextView textView1;
     Button xml;
@@ -82,7 +82,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 json.setEnabled(false);
                 try{
-                    JSONObject emp=(new JSONObject(JSON_STRING)).getJSONObject("city");
+                    InputStream inputStream = getAssets().open("city.json");
+                    byte[] data = new byte[inputStream.available()];
+                    inputStream.read(data);
+                    String jsonString = new String(data);
+                    JSONObject emp=(new JSONObject(jsonString)).getJSONObject("city");
                     String cityname=emp.getString("City_Name");
                     String Latitude=emp.getString("Latitude");
                     String Longitude=emp.getString("Longitude");
